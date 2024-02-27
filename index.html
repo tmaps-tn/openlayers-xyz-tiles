@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TMaps</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://storage.googleapis.com/tmaps-public-assets/favico.ico?v0">
+    <link rel="shortcut icon" href="https://storage.googleapis.com/tmaps-public-assets/favico.ico?v0" />
+    <meta property="og:title" content="Tmaps" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta data-hid="keywords" name="keywords" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="author" name="author" content="TMaps">
+    <meta data-hid="copyright" name="copyright" content="© TMaps ©">
+    <meta data-hid="language" name="language" content="fr_FR">
+    <meta data-hid="robots" name="robots" content="index, follow">
+    <meta property="description" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="image" name="image" content="https://storage.googleapis.com/tmaps-public-assets/Teasing_tmaps.png">
+    <meta data-hid="og:image" name="og:image" content="https://storage.googleapis.com/tmaps-public-assets/Teasing_tmaps.png">
+
+    <meta data-hid="og:url" name="og:url" content="https://tmaps.tn">
+    <meta data-hid="twitter:url" name="twitter:url" content="https://tmaps.tn">
+    <link rel="canonical" href="https://tmaps.tn">
+
+    <meta data-hid="og:type" name="og:type" content="website">
+    <meta property="og:description" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="twitter:description" name="twitter:description" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="description" name="description" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+
+    <meta data-hid="og:locale:alternate" name="og:locale:alternate" content="fr_FR">
+    <meta data-hid="og:site_name" name="og:site_name" content="Tmaps.tn">
+    <meta data-hid="og:image:alt" name="og:image:alt" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="twitter:card" name="twitter:card" content="summary_large_image">
+    <meta data-hid="twitter:title" name="twitter:title" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="twitter:image" name="twitter:image" content="https://storage.googleapis.com/tmaps-public-assets/Teasing_tmaps.png">
+    <meta data-hid="twitter:image:alt" name="twitter:image:alt" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="twitter:creator" name="twitter:creator" content="@TMaps">
+    <meta data-hid="twitter:site" name="twitter:site" content="@TMaps">
+    <meta data-hid="charset" charset="utf-8">
+    <meta data-hid="mobile-web-app-capable" name="mobile-web-app-capable" content="yes">
+    <meta data-hid="apple-mobile-web-app-title" name="apple-mobile-web-app-title" content="Recherchez des commerces et des services de proximité en Tunisie, affichez des plans et calculez des itinéraires routiers dans TMaps.">
+    <meta data-hid="theme-color" name="theme-color" content="#2e47f0">
+    <meta data-hid="og:locale" property="og:locale" content="fr">
+    <meta data-hid="og:locale:alternate-fr-FR" property="og:locale:alternate" content="fr_FR">
+    <!-- CSS/JS for OpenLayers map  -->
+    <script src="https://cdn.jsdelivr.net/npm/ol@v8.2.0/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v8.2.0/ol.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+            font-family: sans-serif;
+        }
+        .ol-zoom {
+            bottom: 0.5rem!important;
+            right: 0.5rem!important;
+            top: auto!important;
+            left:  auto!important;
+        }
+        .ol-control {
+            background-color: #ff000000!important;
+        }
+        .ol-zoom-in {
+            height: 3rem!important;
+            width: 3rem!important;
+            border-radius: 2rem!important;
+            box-shadow: 0 0.156rem 0.156rem #00194b0d, 0 0 0.5rem #00194b0d, 0 0.313rem 0.313rem #00194b0d!important;
+        }
+        .ol-zoom-out {
+            height: 3rem!important;
+            width: 3rem!important;
+            border-radius: 2rem!important;
+            box-shadow: 0 0.156rem 0.156rem #00194b0d, 0 0 0.5rem #00194b0d, 0 0.313rem 0.313rem #00194b0d!important;
+        }
+    </style>
+</head>
+
+<body>
+<div id="map"></div>
+<script>
+    let initZoom = 11;
+    let initLat = 36.818231;
+    let initLng = 10.27;
+    if(window && window.location && window.location.hash){
+        const allParams = window.location.hash.split('#')[1].split(',');
+        if(allParams[0]){initZoom = Number(allParams[0])}
+        if(allParams[1]){initLat = Number(allParams[1])}
+        if(allParams[2]){initLng = Number(allParams[2])}
+    }
+    const baseLayer = new ol.layer.Tile({preload: Infinity,source: new ol.source.XYZ({url: "https://tmaps.tn/_tiles/{z}/{x}/{y}?api_key=LJXqQ8ErW71UsRUK3R33Ow&api_id=VgTVFr1a0ft1qGcLCVJ6"})});
+    const map = new ol.Map({
+        preload: Infinity,
+        loadTilesWhileAnimating: true,
+        loadTilesWhileInteracting: true,
+        target: 'map',
+        view: new ol.View({projection: 'EPSG:4326',center: [initLng,initLat], zoom: initZoom,minZoom:0,maxZoom:19}),
+        layers: [baseLayer]
+    });
+    map.on("moveend", function () {
+        const lat = map.getView().getCenter()[1];
+        const lng = map.getView().getCenter()[0];
+        const zoom = map.getView().getZoom();
+        window.location.hash = zoom + ','  + lat + ',' + lng ;
+    });
+</script>
+
+</body>
+</html>
